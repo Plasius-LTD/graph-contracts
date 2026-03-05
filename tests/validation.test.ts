@@ -1,8 +1,19 @@
 import { describe, expect, it } from "vitest";
 
+import {
+  DEFAULT_HARD_TTL_SECONDS,
+  DEFAULT_SCHEMA_VERSION,
+  DEFAULT_SOFT_TTL_SECONDS,
+} from "../src/constants.js";
 import { isDomainEvent, isGraphQuery, isResolverRequest } from "../src/validation.js";
 
 describe("validation guards", () => {
+  it("exports default cache constants", () => {
+    expect(DEFAULT_SOFT_TTL_SECONDS).toBe(30);
+    expect(DEFAULT_HARD_TTL_SECONDS).toBe(300);
+    expect(DEFAULT_SCHEMA_VERSION).toBe("1");
+  });
+
   it("accepts a valid resolver request", () => {
     expect(
       isResolverRequest({
@@ -18,6 +29,41 @@ describe("validation guards", () => {
     expect(
       isResolverRequest({
         resolver: "user.profile",
+      }),
+    ).toBe(false);
+  });
+
+  it("rejects resolver requests when tags or params are invalid", () => {
+    expect(
+      isResolverRequest({
+        resolver: "user.profile",
+        key: "user:1",
+        tags: ["ok", 123],
+      }),
+    ).toBe(false);
+
+    expect(
+      isResolverRequest({
+        resolver: "user.profile",
+        key: "user:1",
+        params: "bad",
+      }),
+    ).toBe(false);
+  });
+
+  it("rejects resolver requests with non-string identifiers", () => {
+    expect(isResolverRequest(null)).toBe(false);
+    expect(isResolverRequest([])).toBe(false);
+    expect(
+      isResolverRequest({
+        resolver: "",
+        key: "user:1",
+      }),
+    ).toBe(false);
+    expect(
+      isResolverRequest({
+        resolver: "user.profile",
+        key: "",
       }),
     ).toBe(false);
   });
@@ -44,6 +90,15 @@ describe("validation guards", () => {
             resolver: "user.profile",
           },
         ],
+      }),
+    ).toBe(false);
+  });
+
+  it("rejects graph queries with invalid request container shape", () => {
+    expect(isGraphQuery(null)).toBe(false);
+    expect(
+      isGraphQuery({
+        requests: "invalid",
       }),
     ).toBe(false);
   });
@@ -76,6 +131,110 @@ describe("validation guards", () => {
         payload: "invalid",
         tags: ["entity"],
         schemaVersion: "1",
+        source: "graph-service",
+      }),
+    ).toBe(false);
+  });
+
+  it("rejects events with invalid primitive fields", () => {
+    expect(isDomainEvent(null)).toBe(false);
+    expect(
+      isDomainEvent({
+        id: 7,
+        type: "graph.entity.updated",
+        occurredAtEpochMs: 1,
+        aggregateKey: "agg:1",
+        version: 2,
+        payload: {},
+        tags: ["entity"],
+        schemaVersion: "1",
+        source: "graph-service",
+      }),
+    ).toBe(false);
+
+    expect(
+      isDomainEvent({
+        id: "evt_1",
+        type: "graph.entity.updated",
+        occurredAtEpochMs: "1",
+        aggregateKey: "agg:1",
+        version: 2,
+        payload: {},
+        tags: ["entity"],
+        schemaVersion: "1",
+        source: "graph-service",
+      }),
+    ).toBe(false);
+
+    expect(
+      isDomainEvent({
+        id: "evt_1",
+        type: "graph.entity.updated",
+        occurredAtEpochMs: 1,
+        aggregateKey: 9,
+        version: 2,
+        payload: {},
+        tags: ["entity"],
+        schemaVersion: "1",
+        source: "graph-service",
+      }),
+    ).toBe(false);
+  });
+
+  it("rejects events with invalid optional fields and metadata", () => {
+    expect(
+      isDomainEvent({
+        id: "evt_1",
+        type: "graph.entity.updated",
+        occurredAtEpochMs: 1,
+        aggregateKey: "agg:1",
+        entityKey: 42,
+        version: 2,
+        payload: {},
+        tags: ["entity"],
+        schemaVersion: "1",
+        source: "graph-service",
+      }),
+    ).toBe(false);
+
+    expect(
+      isDomainEvent({
+        id: "evt_1",
+        type: "graph.entity.updated",
+        occurredAtEpochMs: 1,
+        aggregateKey: "agg:1",
+        version: true,
+        payload: {},
+        tags: ["entity"],
+        schemaVersion: "1",
+        source: "graph-service",
+      }),
+    ).toBe(false);
+
+    expect(
+      isDomainEvent({
+        id: "evt_1",
+        type: "graph.entity.updated",
+        occurredAtEpochMs: 1,
+        aggregateKey: "agg:1",
+        version: 2,
+        payload: {},
+        tags: "entity",
+        schemaVersion: "1",
+        source: "graph-service",
+      }),
+    ).toBe(false);
+
+    expect(
+      isDomainEvent({
+        id: "evt_1",
+        type: "graph.entity.updated",
+        occurredAtEpochMs: 1,
+        aggregateKey: "agg:1",
+        version: 2,
+        payload: {},
+        tags: ["entity"],
+        schemaVersion: 1,
         source: "graph-service",
       }),
     ).toBe(false);
