@@ -9,16 +9,19 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - `getSchemaSupportLevel` and `isSchemaVersionSupported` helpers.
+  - `SUPPORTED_SCHEMA_VERSIONS` and `DEPRECATED_SCHEMA_VERSIONS` constants.
+  - `tests/compatibility.test.ts` CI contract compatibility suite.
+  - ADR-0003 and contract versioning/deprecation policy documentation.
 
 - **Changed**
-  - (placeholder)
+  - README with explicit contract compatibility guidance and test references.
 
 - **Fixed**
-  - (placeholder)
+  - N/A
 
 - **Security**
-  - (placeholder)
+  - N/A
 
 ## [0.1.0] - 2026-03-05
 

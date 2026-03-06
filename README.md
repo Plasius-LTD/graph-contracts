@@ -37,8 +37,11 @@ npm install @plasius/graph-contracts
 import {
   DEFAULT_SOFT_TTL_SECONDS,
   DEFAULT_HARD_TTL_SECONDS,
+  SUPPORTED_SCHEMA_VERSIONS,
   isGraphQuery,
   isDomainEvent,
+  getSchemaSupportLevel,
+  isSchemaVersionSupported,
   type GraphQuery,
   type CacheStore,
   type WriteCommand,
@@ -80,6 +83,17 @@ npm run typecheck
 npm run test:coverage
 npm run build
 ```
+
+---
+
+## Contract Compatibility
+
+- Versioning policy: [`docs/contract-versioning.md`](./docs/contract-versioning.md)
+- Compatibility helpers:
+  - `SUPPORTED_SCHEMA_VERSIONS`
+  - `getSchemaSupportLevel`
+  - `isSchemaVersionSupported`
+- CI compatibility suite: `tests/compatibility.test.ts`
 
 ---
 
