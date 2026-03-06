@@ -1,6 +1,6 @@
 {
   "name": "@plasius/graph-contracts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared contracts and ports for the Plasius cached graph platform",
   "type": "module",
   "sideEffects": false,
@@ -32,7 +32,13 @@
     "clean": "rimraf dist coverage",
     "test:coverage": "vitest run --coverage"
   },
-  "keywords": ["plasius","graph","contracts","types","ports"],
+  "keywords": [
+    "plasius",
+    "graph",
+    "contracts",
+    "types",
+    "ports"
+  ],
   "author": "Plasius LTD <development@plasius.co.uk>",
   "license": "Apache-2.0",
   "repository": {
