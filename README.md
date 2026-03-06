@@ -40,6 +40,7 @@ import {
   SUPPORTED_SCHEMA_VERSIONS,
   isGraphQuery,
   isDomainEvent,
+  isWriteCommand,
   getSchemaSupportLevel,
   isSchemaVersionSupported,
   type GraphQuery,

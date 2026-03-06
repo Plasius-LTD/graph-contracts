@@ -11,6 +11,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 - **Added**
   - `getSchemaSupportLevel` and `isSchemaVersionSupported` helpers.
   - `SUPPORTED_SCHEMA_VERSIONS` and `DEPRECATED_SCHEMA_VERSIONS` constants.
+  - `isWriteCommand` runtime validator for write boundary input validation.
   - `tests/compatibility.test.ts` CI contract compatibility suite.
   - ADR-0003 and contract versioning/deprecation policy documentation.
 

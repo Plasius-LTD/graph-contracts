@@ -5,7 +5,7 @@ import {
   DEFAULT_SCHEMA_VERSION,
   DEFAULT_SOFT_TTL_SECONDS,
 } from "../src/constants.js";
-import { isDomainEvent, isGraphQuery, isResolverRequest } from "../src/validation.js";
+import { isDomainEvent, isGraphQuery, isResolverRequest, isWriteCommand } from "../src/validation.js";
 
 describe("validation guards", () => {
   it("exports default cache constants", () => {
@@ -236,6 +236,63 @@ describe("validation guards", () => {
         tags: ["entity"],
         schemaVersion: 1,
         source: "graph-service",
+      }),
+    ).toBe(false);
+  });
+
+  it("accepts a valid write command", () => {
+    expect(
+      isWriteCommand({
+        idempotencyKey: "idk_1",
+        partitionKey: "user",
+        aggregateKey: "user_1",
+        payload: { enabled: true },
+        submittedAtEpochMs: 1,
+        actorId: "actor_1",
+      }),
+    ).toBe(true);
+  });
+
+  it("rejects write commands with invalid key formats and lengths", () => {
+    expect(
+      isWriteCommand({
+        idempotencyKey: "bad key",
+        partitionKey: "user",
+        aggregateKey: "user_1",
+        payload: { enabled: true },
+        submittedAtEpochMs: 1,
+      }),
+    ).toBe(false);
+
+    expect(
+      isWriteCommand({
+        idempotencyKey: "idk_1",
+        partitionKey: "user",
+        aggregateKey: "x".repeat(257),
+        payload: { enabled: true },
+        submittedAtEpochMs: 1,
+      }),
+    ).toBe(false);
+  });
+
+  it("rejects write commands with invalid payload/metadata fields", () => {
+    expect(
+      isWriteCommand({
+        idempotencyKey: "idk_1",
+        partitionKey: "user",
+        aggregateKey: "user_1",
+        payload: [],
+        submittedAtEpochMs: 1,
+      }),
+    ).toBe(false);
+
+    expect(
+      isWriteCommand({
+        idempotencyKey: "idk_1",
+        partitionKey: "user",
+        aggregateKey: "user_1",
+        payload: { enabled: true },
+        submittedAtEpochMs: -1,
       }),
     ).toBe(false);
   });
