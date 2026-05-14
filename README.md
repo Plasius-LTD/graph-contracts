@@ -43,6 +43,7 @@ import {
   isWriteCommand,
   getSchemaSupportLevel,
   isSchemaVersionSupported,
+  type DequeuedWriteCommand,
   type GraphQuery,
   type CacheStore,
   type WriteCommand,
@@ -94,6 +95,10 @@ npm run build
   - `SUPPORTED_SCHEMA_VERSIONS`
   - `getSchemaSupportLevel`
   - `isSchemaVersionSupported`
+- Queue dequeue contract:
+  - `DequeuedWriteCommand.queueReceiptId` carries the queue receipt or dequeued
+    message identity that should be passed back to `WriteQueue.ack()` and
+    `WriteQueue.nack()` when a durable queue provides one.
 - CI compatibility suite: `tests/compatibility.test.ts`
 
 ---

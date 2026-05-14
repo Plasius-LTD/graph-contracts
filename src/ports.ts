@@ -46,11 +46,23 @@ export interface EventConsumer {
   subscribe(handler: (event: DomainEvent) => Promise<void>): Promise<void>;
 }
 
+/**
+ * A write command returned from queue dequeue operations.
+ *
+ * Durable queue implementations can attach a queue-specific acknowledgement
+ * receipt or message identity. Coordinators should pass that receipt back to
+ * `ack()` / `nack()` instead of using a generated processing operation id.
+ */
+export interface DequeuedWriteCommand<TPayload extends Record<string, JsonValue> = Record<string, JsonValue>>
+  extends WriteCommand<TPayload> {
+  queueReceiptId?: string;
+}
+
 export interface WriteQueue {
   enqueue(command: WriteCommand): Promise<WriteOperation>;
-  dequeue(partitionKey: string, limit: number): Promise<WriteCommand[]>;
-  ack(operationId: string): Promise<void>;
-  nack(operationId: string, reason: string): Promise<void>;
+  dequeue(partitionKey: string, limit: number): Promise<DequeuedWriteCommand[]>;
+  ack(queueReceiptId: string): Promise<void>;
+  nack(queueReceiptId: string, reason: string): Promise<void>;
 }
 
 export interface OperationStore {
