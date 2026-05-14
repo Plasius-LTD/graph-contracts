@@ -9,10 +9,10 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - `DequeuedWriteCommand` so `WriteQueue.dequeue()` can return queue receipt metadata for durable ack and nack flows.
 
 - **Changed**
-  - (placeholder)
+  - Documented that `WriteQueue.ack()` and `WriteQueue.nack()` should receive the dequeued queue receipt or message identity when one is provided.
 
 - **Fixed**
   - (placeholder)
