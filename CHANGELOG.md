@@ -9,10 +9,10 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - `WriteCommand.operationId` for preserving one externally pollable operation identity through queued processing.
 
 - **Changed**
-  - (placeholder)
+  - Clarified that `DequeuedWriteCommand.queueReceiptId` is used only for queue acknowledgement and is distinct from operation status identity.
 
 - **Fixed**
   - (placeholder)
