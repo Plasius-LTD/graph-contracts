@@ -13,6 +13,19 @@
 - Consumers must treat unsupported schema versions as incompatible input and fail fast at the boundary.
 - Breaking contract changes require a new schema major and a migration plan before release.
 
+## Queued operation identity
+
+- `WriteCommand.operationId` is an additive, optional field for the
+  coordinator-assigned operation identity.
+- Queue implementations must preserve it on `DequeuedWriteCommand` when it is
+  provided. It is the identity used to update and poll operation status.
+- `DequeuedWriteCommand.queueReceiptId` remains a separate, optional queue
+  acknowledgement identity used only by `WriteQueue.ack()` and
+  `WriteQueue.nack()`.
+- Implementations that do not yet preserve `operationId` remain source- and
+  wire-compatible; coordinators must retain their documented legacy fallback
+  until all queue implementations are upgraded.
+
 ## Deprecation Window
 
 - A schema version can be marked deprecated only after the replacement version is published.

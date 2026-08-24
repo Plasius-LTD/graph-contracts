@@ -251,6 +251,17 @@ describe("validation guards", () => {
         actorId: "actor_1",
       }),
     ).toBe(true);
+
+    expect(
+      isWriteCommand({
+        operationId: "operation_1",
+        idempotencyKey: "idk_1",
+        partitionKey: "user",
+        aggregateKey: "user_1",
+        payload: { enabled: true },
+        submittedAtEpochMs: 1,
+      }),
+    ).toBe(true);
   });
 
   it("rejects write commands with invalid key formats and lengths", () => {
@@ -282,6 +293,17 @@ describe("validation guards", () => {
         partitionKey: "user",
         aggregateKey: "user_1",
         payload: [],
+        submittedAtEpochMs: 1,
+      }),
+    ).toBe(false);
+
+    expect(
+      isWriteCommand({
+        operationId: "invalid operation id",
+        idempotencyKey: "idk_1",
+        partitionKey: "user",
+        aggregateKey: "user_1",
+        payload: { enabled: true },
         submittedAtEpochMs: 1,
       }),
     ).toBe(false);

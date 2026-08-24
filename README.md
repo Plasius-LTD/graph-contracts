@@ -96,9 +96,13 @@ npm run build
   - `getSchemaSupportLevel`
   - `isSchemaVersionSupported`
 - Queue dequeue contract:
+  - `WriteCommand.operationId` is the coordinator-assigned, externally
+    pollable operation identity. Queued commands preserve it through dequeue
+    and processing.
   - `DequeuedWriteCommand.queueReceiptId` carries the queue receipt or dequeued
-    message identity that should be passed back to `WriteQueue.ack()` and
-    `WriteQueue.nack()` when a durable queue provides one.
+    message identity only; pass it to `WriteQueue.ack()` and
+    `WriteQueue.nack()` when a durable queue provides one. It must not be used
+    as the operation status identity.
 - CI compatibility suite: `tests/compatibility.test.ts`
 
 ---
