@@ -88,6 +88,16 @@ export const isWriteCommand = (value: unknown): value is WriteCommand => {
   }
 
   if (
+    value.operationId !== undefined
+    && (typeof value.operationId !== "string"
+      || value.operationId.length === 0
+      || value.operationId.length > 128
+      || !isSafeKey(value.operationId))
+  ) {
+    return false;
+  }
+
+  if (
     typeof value.idempotencyKey !== "string"
     || value.idempotencyKey.length === 0
     || value.idempotencyKey.length > 128

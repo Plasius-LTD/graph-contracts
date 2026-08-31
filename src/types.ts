@@ -87,6 +87,11 @@ export type WriteOperationState =
   | "cancelled";
 
 export interface WriteCommand<TPayload extends Record<string, JsonValue> = Record<string, JsonValue>> {
+  /**
+   * Coordinator-assigned identity used to track a queued write across dequeue
+   * and processing. It is distinct from any queue acknowledgement receipt.
+   */
+  operationId?: string;
   idempotencyKey: string;
   partitionKey: string;
   aggregateKey: string;
