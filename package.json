@@ -1,6 +1,6 @@
 {
   "name": "@plasius/graph-contracts",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Shared contracts and ports for the Plasius cached graph platform",
   "type": "module",
   "sideEffects": false,
