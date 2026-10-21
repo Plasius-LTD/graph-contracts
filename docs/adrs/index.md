@@ -4,3 +4,4 @@
 - [ADR-0002: Dual ESM and CJS Distribution](./adr-0002-dual-esm-cjs-distribution.md)
 - [ADR-0003: Contract Versioning and Deprecation Policy](./adr-0003-contract-versioning-policy.md)
 - [ADR-0004: Hosted OIDC Package Publication](./adr-0004-hosted-oidc-package-publication.md)
+- [ADR-0005: Quarantined Trusted-Push CI](./adr-0005-quarantined-push-ci.md)
