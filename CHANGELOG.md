@@ -8,6 +8,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.1.15] - 2026-10-21
+
 - Restore trusted-push CI to the approved quarantined self-hosted Linux/X64 group with bounded jobs, no PR-head execution or hosted fallback, non-persisted checkout credentials, reproducible install and final package-manifest validation; retain exact-main hosted production OIDC publication.
 
 - **Added**
@@ -256,3 +270,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [0.1.12]: https://github.com/Plasius-LTD/graph-contracts/releases/tag/v0.1.12
 [0.1.13]: https://github.com/Plasius-LTD/graph-contracts/releases/tag/v0.1.13
 [0.1.14]: https://github.com/Plasius-LTD/graph-contracts/releases/tag/v0.1.14
+[0.1.15]: https://github.com/Plasius-LTD/graph-contracts/releases/tag/v0.1.15
